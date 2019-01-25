@@ -44,7 +44,9 @@ class HttpRequest {
     return new Promise((resolve, reject) => {
       xhr.onloadend = () => {
         if (xhr.status === 200) {
-          const transResp = transformResponse ? transformResponse.reduce((acc, f) => f(acc), xhr.response) : xhr.response;
+          const transResp = transformResponse
+            ? transformResponse.reduce((acc, f) => f(acc), xhr.response)
+            : xhr.response;
           resolve(transResp);
         } else {
           reject(xhr);
