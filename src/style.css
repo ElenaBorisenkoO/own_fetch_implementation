@@ -1,0 +1,25 @@
+#myProgress {
+    width: 100%;
+    background-color: #ddd;
+  }
+  
+  #uploadBar {
+    width: 10%;
+    height: 30px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+  }
+
+  #downloadBar {
+    width: 10%;
+    height: 30px;
+    background-color: rgb(55, 59, 124);
+    text-align: center;
+    line-height: 30px;
+    color: white;
+  }
+  #errors {
+    color : red;
+  }

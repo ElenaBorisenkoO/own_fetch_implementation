@@ -1,15 +1,26 @@
 <html>
   <body>
+      <link href="style.css" rel="stylesheet">
     <form id='uploadForm' 
       encType="multipart/form-data">
       <input type="file" name="sampleFile" />
-      <input type='submit' value='Upload!' />
+      <input type='submit' value='Upload!' id = "uploadButton" />
     </form>
     <form id='downloadForm'>
-      <input type="text" name="sampleFile" />
-      <input type='submit' value='Download!' />
+      <input type="text" name="sampleFile" id = "fileName"/>
+      <input type='submit' value='Download!' id = "downloadButton"/>
     </form>
+    <div id="myProgress">
+      <div id="uploadBar" style = "width: 0"></div>
+      <div id="downloadBar" style = "width: 0"></div>
+    </div>
+    <div>
+      <img src = "" id = "image" >
+    </div>  
+    <div>
+      <span id = "errors"></span>
+    </div> 
 </body>
-<script src="/src/HttpRequest.js" ></script>
-<script src="src/progress.js" ></script>
+<script src="HttpRequest.js" ></script>
+<script src="progress.js" ></script>
 </html>
