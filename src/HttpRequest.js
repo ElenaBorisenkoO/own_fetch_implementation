@@ -44,9 +44,7 @@ class HttpRequest {
     return new Promise((resolve, reject) => {
       xhr.onloadend = () => {
         if (xhr.status === 200) {
-          const transResp = transformResponse
-            ? transformResponse.reduce((acc, f) => f(acc), xhr.response)
-            : xhr.response;
+          const transResp = transformResponse ? transformResponse(xhr) : xhr.response;
           resolve(transResp);
         } else {
           reject(xhr);
@@ -83,35 +81,6 @@ class HttpRequest {
     });
   }
 }
-
-
-// const request = new HttpRequest({
-//   baseUrl: 'http://localhost:8000',
-//   headers: {
-//     'Myheader': 'someValue'
-//   }
-// });
-// request.get('/ping', {
-//   headers: {
-//     'Ping': 'pong'
-//   },
-//   params: {
-//     't': new Date()
-//   }
-// }).then(value => {
-//   alert(value);
-// }, result => { console.log(result); });
-
-// // POST
-
-// request.post('/ping', {
-//   headers: {
-//     'Cat': 'myau'
-//   }
-// }).then(value => {
-//   console.log(value);
-// });
-
 
 // reuest.get('/user/12345', { onDownloadProgress, headers: { contentType: undefined } })
 //   .then(response => {
