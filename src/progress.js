@@ -1,5 +1,6 @@
 
 const errorLine = document.getElementById('errors');
+const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' });
 function processProgressBar(id, data) {
   const element = document.getElementById(id);
   let currentWidth = element.style.width;
@@ -17,7 +18,6 @@ document.getElementById('uploadForm').onsubmit = function(e) {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'multipart/form-data');
   form.append('sampleFile', e.target.sampleFile.files[0]);
-  const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' }); // eslint-disable-line
   xhr.post('/upload', {
     data: form,
     onUploadProgress: data => processProgressBar('uploadBar', data)
@@ -25,6 +25,7 @@ document.getElementById('uploadForm').onsubmit = function(e) {
     // console.log(data);
     const response = JSON.parse(data);
     document.getElementById('fileName').value = response.path;
+    document.getElementById('upload_list').click();
   })
     .catch(err => {
       let error = err;
@@ -35,7 +36,6 @@ document.getElementById('uploadForm').onsubmit = function(e) {
 
 document.getElementById('downloadForm').onsubmit = function(e) {
   e.preventDefault();
-  const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' }); // eslint-disable-line
   const fileName = document.getElementById('fileName').value;
 
   if (!fileName) {
@@ -58,4 +58,19 @@ document.getElementById('downloadForm').onsubmit = function(e) {
       errorLine.innerHTML = error;
     });
 };
-
+function drawFilesList(files) {
+  const list = document.getElementById('files_list');
+  list.innerHTML = '';
+  files.forEach(element => {
+    const listItem = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `/files/${element}`;
+    link.textContent = element;
+    listItem.appendChild(link);
+    list.appendChild(listItem);
+  });
+}
+document.getElementById('upload_list').addEventListener('click', function(e) {
+  xhr.get('/list', {}).then(data =>
+    drawFilesList(JSON.parse(data)));
+});

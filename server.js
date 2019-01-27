@@ -2,6 +2,7 @@
 
 const express = require('express');
 const fileUpload = require('express-fileupload');
+const fs = require('fs');
 const app = express();
 
 app.use('/form', express.static(`${__dirname}/index.html`));
@@ -19,6 +20,14 @@ app.post('/ping', function(req, res) {
 
 app.get('/ping', function(req, res) {
   res.send('pong');
+});
+
+app.get('/list', function(req, res) {
+  let filelist = [];
+  fs.readdirSync(`${__dirname}/uploads/`).forEach(file => {
+    filelist.push(file);
+  });
+  res.send(filelist);
 });
 
 app.post('/upload', function(req, res) {
