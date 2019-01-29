@@ -4,12 +4,19 @@ const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' });// eslint-disa
 function processProgressBar(id, data) {
   const element = document.getElementById(id);
   let currentWidth = element.style.width;
-  // console.log(loaded);
-  // console.log(total);
-  // console.log(currentWidth);
   currentWidth = (data.loaded / data.total) * 100;
   element.style.width = `${currentWidth}%`;
   element.innerHTML = `${Number(currentWidth)}%`;
+  document.title = `${Number(currentWidth)}%`;
+}
+function showProgressBar(id) {
+  const element = document.getElementById(id);
+
+  if (element.classList.contains('hidden')) {
+    element.classList.remove('hidden');
+  } else {
+    element.classList.add('hidden');
+  }
 }
 
 function drawImage(blob, imageElement) {
@@ -32,6 +39,8 @@ function saveFile(blob, fileName) {
 
 
 function fileProcessor(data, fileName, imageElement) {
+  imageElement.src = '';
+
   if (data.contentType.startsWith('image')) {
     drawImage(data.blob, imageElement);
   } else {
@@ -56,19 +65,26 @@ document.getElementById('uploadForm').onsubmit = function(e) {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'multipart/form-data');
   form.append('sampleFile', e.target.sampleFile.files[0]);
+  showProgressBar('uploadBar');
+  const windowtitle = document.title;
   xhr.post('/upload', {
     data: form,
-    onUploadProgress: data => processProgressBar('uploadBar', data)
+    onUploadProgress: data => {
+      processProgressBar('uploadBar', data);
+    }
   }).then(data => {
-    // console.log(data);
     const response = JSON.parse(data);
     document.getElementById('fileName').value = response.path;
+    setTimeout(function() {
+      document.title = windowtitle;
+    }, 2000);
   })
     .catch(err => {
       let error = err;
       error = 'Cannot Upload file  Error: 404 (Not Found)';
       errorLine.innerHTML = error;
     });
+  setTimeout(showProgressBar, 2000, 'uploadBar');
 };
 
 document.getElementById('downloadForm').onsubmit = function(e) {
@@ -78,19 +94,27 @@ document.getElementById('downloadForm').onsubmit = function(e) {
   if (!fileName) {
     errorLine.innerHTML = 'Please specify file name';
   }
-
+  showProgressBar('downloadBar');
+  const windowtitle = document.title;
   xhr.get(`/files/${fileName}`, {
     responseType: 'arraybuffer',
-    onDownloadProgress: data => processProgressBar('downloadBar', data),
+    onDownloadProgress: data => {
+      processProgressBar('downloadBar', data);
+    },
     transformResponse: loadFileTransformer
+
   }).then(data => {
     fileProcessor(data, fileName, document.getElementById('image'));
+    setTimeout(function() {
+      document.title = windowtitle;
+    }, 2000);
   })
     .catch(err => {
       let error = err;
       error = 'Cannot Download file Error: 404 (Not Found)';
       errorLine.innerHTML = error;
     });
+  setTimeout(showProgressBar, 2000, 'downloadBar');
 };
 
 function drawFilesList(files) {
@@ -105,6 +129,11 @@ function drawFilesList(files) {
     list.appendChild(listItem);
   });
 }
+
+window.addEventListener('load', function(e) {
+  xhr.get('/list', {}).then(data =>
+    drawFilesList(JSON.parse(data)));
+});
 document.getElementById('upload_list').addEventListener('click', function(e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));

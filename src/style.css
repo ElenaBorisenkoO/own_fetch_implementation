@@ -1,4 +1,85 @@
-#myProgress {
+body{
+  background: #fff;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 14pt;
+  font-weight: 300;
+  line-height: 1.75em;
+}
+.main{
+  color: #555f66;
+  padding: 0;
+}
+.major{
+  display: block;
+  text-align: center;
+  margin: 8px 0 8px 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+}
+.container{
+  max-width: none!important;
+  min-width: 0!important;
+  width: 90%!important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.loads{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  max-width: 100%; 
+  padding: 30px 0;
+}
+.upload,.download,.list{
+  margin: 10px;
+  width:30%;
+}
+.list{
+  width: 40%;
+}
+p {
+  margin: 0 0 2em 0;
+}
+h2,{
+  color: #666f77;
+  font-weight: 300;
+  line-height: 1em;
+  margin: 0 0 1em 0;
+  text-transform: uppercase;
+  letter-spacing: 0.125em;
+}
+a {
+  color: #629DD1;
+  text-decoration: underline;
+}
+
+  a:hover {
+    text-decoration: none;
+  }
+
+#fileContainer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background:#474545;
+  border-radius: .5em;
+  height: 2.85em;
+  line-height: 2.85em;
+  cursor: pointer;
+}
+#fileName{
+  background:#474545;
+  border-radius: .5em;
+  height: 3.8em;
+ border: none;
+ width: 100%;
+}
+.hidden{
+  display: none;
+}
+.myProgress {
     width: 100%;
     background-color: #ddd;
   }
@@ -21,5 +102,28 @@
     color: white;
   }
   #errors {
+    text-align: center;
     color : red;
-  }
+  } 
+  .button{
+    background-color: #629DD1;
+		border-radius: 6px;
+		border: 0;
+		color: #ffffff !important;
+		cursor: pointer;
+		display: inline-block;
+		font-weight: 300;
+		text-transform: uppercase;
+		letter-spacing: 0.125em;
+		font-size: 0.9em;
+		height: 2.85em;
+		line-height: 2.85em;
+		text-align: center;
+		text-decoration: none;
+		white-space: nowrap;
+    text-indent: 0.25em;
+    width: 100%;
+ }
+ .button:hover {
+  background-color: rgb(115, 166, 211);
+}

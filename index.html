@@ -1,33 +1,57 @@
+<!DOCTYPE HTML>
 <html>
-  <body>
-      <link href="style.css" rel="stylesheet">
-    <form id='uploadForm' 
-      encType="multipart/form-data">
-      <input type="file" name="sampleFile" />
-      <input type='submit' value='Upload!' id = "uploadButton" />
-    </form>
-    <form id='downloadForm'>
-      <input type="text" name="sampleFile" id = "fileName"/>
-      <input type='submit' value='Download!' id = "downloadButton"/>
-    </form>
-    <div id="myProgress">
-      <div id="uploadBar" style = "width: 0"></div>
-      <div id="downloadBar" style = "width: 0"></div>
-    </div>
-    <div>
-      <img src = "" id = "image" >
-    </div>  
-    <div>
-      <span id = "errors"></span>
-    </div> 
-    <div>
-      <h3>List uploaded files</h3>
-      <input type="button" value="Upload list" id="upload_list"/>
-      <ul id="files_list">
-        
-      </ul>
-    </div>
+
+<head>
+  <title>XMLHttpRequest</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+  <section class="main">
+    <header class="major">
+      <h2>This is XMLHttpRequest project</h2>
+      <p>You can upload and download whatever you want</p>
+    </header>
+    <section class="container">
+      <section class="loads">
+        <div class="list">
+          <input type="button" value="Refresh" id="upload_list" class="button" />
+          <ul id="files_list"></ul>
+        </div>
+        <div class="upload">
+          <form id='uploadForm' encType="multipart/form-data">
+            <div id="fileContainer">
+              <input type="file" name="sampleFile"/>
+            </div>
+            <input type='submit' value='Upload' id="uploadButton" class="button" />
+            <div class="myProgress">
+              <div id="uploadBar" style="width: 0" class="hidden"></div>
+            </div>
+          </form>
+        </div>
+        <div class="download">
+          <form id='downloadForm'>
+            <input type="text" name="sampleFile" id="fileName" />
+            <input type='submit' value='Download' id="downloadButton" class="button" />
+            <div class="myProgress">
+              <div id="downloadBar" style="width: 0" class="hidden"></div>
+            </div>
+            <div>
+              <img src="" id="image" width="100%" >
+            </div>
+          </form>
+        </div>
+
+      </section>
+      <div id="errors">
+        <p></p>
+      </div>
+    </section>
+  </section>
 </body>
-<script src="HttpRequest.js" ></script>
-<script src="progress.js" ></script>
+<script src="HttpRequest.js"></script>
+<script src="progress.js"></script>
+
 </html>
