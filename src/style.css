@@ -59,7 +59,7 @@ a {
     text-decoration: none;
   }
 
-#fileContainer {
+/* #fileContainer {
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -68,13 +68,32 @@ a {
   height: 2.85em;
   line-height: 2.85em;
   cursor: pointer;
+} */
+
+.upload__wrap {
+
 }
+
+.upload__wrap > input {
+  display: none;
+}
+
+.upload__icon {
+
+}
+
+.upload__icon__text {
+
+}
+
 #fileName{
-  background:#474545;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px rgba(112, 112, 112, 0.25);
+  color: #666f77 !important;
   border-radius: .5em;
   height: 3.8em;
- border: none;
- width: 100%;
+  border: none;
+  width: 100%;
 }
 .hidden{
   display: none;
@@ -82,6 +101,32 @@ a {
 .myProgress {
     width: 100%;
     background-color: #ddd;
+  }
+  #upload_list{
+    background-color: #629DD1;
+    color: white !important;
+    cursor: pointer;
+  }
+  #upload_list:hover{
+    box-shadow: inset 0 0 0 1px #629DD1;
+    color:  #629DD1 !important;
+    background-color: transparent;
+  }  
+  .disabled{
+    box-shadow: inset 0 0 0 1px #629DD1;
+    color:  #629DD1 !important;
+    background-color: transparent;
+    cursor: default;
+  }
+  .enabled{
+    box-shadow: inset 0 0 0 1px #629DD1;
+    color:  #629DD1 !important;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  .enabled:hover{
+    background-color: #629DD1;
+    color: white !important;
   }
   
   #uploadBar {
@@ -106,11 +151,8 @@ a {
     color : red;
   } 
   .button{
-    background-color: #629DD1;
 		border-radius: 6px;
 		border: 0;
-		color: #ffffff !important;
-		cursor: pointer;
 		display: inline-block;
 		font-weight: 300;
 		text-transform: uppercase;
@@ -124,6 +166,5 @@ a {
     text-indent: 0.25em;
     width: 100%;
  }
- .button:hover {
-  background-color: rgb(115, 166, 211);
-}
+ 
+

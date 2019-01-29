@@ -22,10 +22,13 @@
         </div>
         <div class="upload">
           <form id='uploadForm' encType="multipart/form-data">
-            <div id="fileContainer">
-              <input type="file" name="sampleFile"/>
-            </div>
-            <input type='submit' value='Upload' id="uploadButton" class="button" />
+            <input type='submit' value='Upload' id="uploadButton" class="button disabled " disabled="true" />
+            <label class="upload__wrap">
+              <input type="file" name="sampleFile" id='uploadinput' />
+              <p class="upload__icon">
+                <span class="upload__icon__text">Choose your file</span>
+              </p>
+            </label>
             <div class="myProgress">
               <div id="uploadBar" style="width: 0" class="hidden"></div>
             </div>
@@ -33,13 +36,13 @@
         </div>
         <div class="download">
           <form id='downloadForm'>
+            <input type='submit' value='Download' id="downloadButton" class="button disabled" disabled="true" />
             <input type="text" name="sampleFile" id="fileName" />
-            <input type='submit' value='Download' id="downloadButton" class="button" />
             <div class="myProgress">
               <div id="downloadBar" style="width: 0" class="hidden"></div>
             </div>
             <div>
-              <img src="" id="image" width="100%" >
+              <img src="" id="image" width="100%">
             </div>
           </form>
         </div>

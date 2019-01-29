@@ -58,6 +58,18 @@ function loadFileTransformer(data) {
     blob
   };
 }
+function setEnableElement(elem, styleCss) {
+  const element = document.getElementById(elem);
+  element.disabled = false;
+
+  if (styleCss) {
+    element.className = styleCss;
+  }
+}
+
+document.getElementById('fileName').onchange = function(e) {
+  setEnableElement('downloadButton', 'button enabled');
+};
 
 document.getElementById('uploadForm').onsubmit = function(e) {
   e.preventDefault();
@@ -74,7 +86,7 @@ document.getElementById('uploadForm').onsubmit = function(e) {
     }
   }).then(data => {
     const response = JSON.parse(data);
-    document.getElementById('fileName').value = response.path;
+    // document.getElementById('fileName').value = response.path;
     setTimeout(function() {
       document.title = windowtitle;
     }, 2000);
@@ -139,4 +151,11 @@ document.getElementById('upload_list').addEventListener('click', function(e) {
     drawFilesList(JSON.parse(data)));
 });
 
+document.getElementById('uploadinput').onchange = function(e) {
+  const element = e.target.value.replace(/.*\\/, '');
 
+  if (element) {
+    document.querySelector('.upload__icon__text').innerHTML = element;
+    setEnableElement('uploadButton', 'button enabled');
+  }
+};
