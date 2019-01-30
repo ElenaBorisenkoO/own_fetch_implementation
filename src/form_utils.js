@@ -16,6 +16,8 @@ document.getElementById('uploadinput').onchange = function(e) {
   }
 };
 
-document.getElementById('fileName').onchange = function(e) {
-  setEnableElement('downloadButton', 'button enabled');
-};
+document.getElementById('fileName').addEventListener('input', function(e) {
+  if (e.target.value && e.target.value.length > 0) {
+    setEnableElement('downloadButton', 'button enabled');
+  }
+});
