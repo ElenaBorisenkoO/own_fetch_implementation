@@ -1,35 +1,42 @@
 
-function applyHeader(xmlhtreq, obj, head) {
-  for (const key in obj) {
-    xmlhtreq.setRequestHeader(obj[key], head[obj[key]]);
-  }
-  return xmlhtreq;
-}
-function applyUrl(url, params) {
-  let newUrl = url;
-  newUrl += '?';
-
-  for (const param in params) {
-    newUrl = `${newUrl + param}=${params[param]}&`;
-  }
-  return newUrl;
-}
-
 class HttpRequest {
   constructor({ baseUrl, headers }) {
     this.baseUrl = baseUrl;
     this.headers = headers;
   }
 
+  static applyHeader(xmlhtreq, obj, head) {
+    for (const key in obj) {
+      xmlhtreq.setRequestHeader(obj[key], head[obj[key]]);
+    }
+    return xmlhtreq;
+  }
+  static applyUrl(url, params) {
+    let newUrl = url;
+    newUrl += '?';
+
+    for (const param in params) {
+      newUrl = `${newUrl + param}=${params[param]}&`;
+    }
+    return newUrl;
+  }
+
+  static processHeaders(allHeaders, xhr) {
+    let _xhr = xhr;
+    allHeaders.forEach(header => {
+      _xhr = HttpRequest.applyHeader(
+        _xhr,
+        header ? Object.keys(header) : [],
+        header
+      );
+    });
+    return _xhr;
+  }
+
   get(url, config) {
     const { headers, params, transformResponse, responseType, onDownloadProgress } = config;
     const xhr = new XMLHttpRequest();
-    const baseHeaders = this.headers ? Object.keys(this.headers) : [];
-    const configHeaders = headers ? Object.keys(headers) : [];
     xhr.responseType = responseType;
-
-    applyHeader(xhr, baseHeaders, this.headers);
-    applyHeader(xhr, configHeaders, headers);
 
     if (params) {
       this.applyUrl(url, params);
@@ -40,6 +47,7 @@ class HttpRequest {
     }
 
     xhr.open('GET', this.baseUrl + url, true);
+    HttpRequest.processHeaders([headers, this.headers], xhr);
 
     return new Promise((resolve, reject) => {
       xhr.onloadend = () => {
@@ -57,13 +65,9 @@ class HttpRequest {
   post(url, config) {
     const { headers, data, onUploadProgress } = config;
     const xhr = new XMLHttpRequest();
-    const baseHeaders = this.headers ? Object.keys(this.headers) : [];
-    const configHeaders = headers ? Object.keys(headers) : [];
-
-    applyHeader(xhr, baseHeaders, this.headers);
-    applyHeader(xhr, configHeaders, headers);
 
     xhr.open('POST', this.baseUrl + url, true);
+    HttpRequest.processHeaders([headers, this.headers], xhr);
 
     if (onUploadProgress) {
       xhr.onprogress = onUploadProgress;

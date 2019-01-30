@@ -1,6 +1,7 @@
 
-const errorLine = document.getElementById('errors');
 const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' });// eslint-disable-line
+const errorLine = document.getElementById('errors');
+
 function processProgressBar(id, data) {
   const element = document.getElementById(id);
   let currentWidth = element.style.width;
@@ -37,7 +38,6 @@ function saveFile(blob, fileName) {
   window.URL.revokeObjectURL(url);
 }
 
-
 function fileProcessor(data, fileName, imageElement) {
   imageElement.src = '';
 
@@ -58,6 +58,7 @@ function loadFileTransformer(data) {
     blob
   };
 }
+
 function setEnableElement(elem, styleCss) {
   const element = document.getElementById(elem);
   element.disabled = false;
@@ -66,6 +67,15 @@ function setEnableElement(elem, styleCss) {
     element.className = styleCss;
   }
 }
+
+document.getElementById('uploadinput').onchange = function(e) {
+  const element = e.target.value.replace(/.*\\/, '');
+
+  if (element) {
+    document.querySelector('.upload__icon__text').innerHTML = element;
+    setEnableElement('uploadButton', 'button enabled');
+  }
+};
 
 document.getElementById('fileName').onchange = function(e) {
   setEnableElement('downloadButton', 'button enabled');
@@ -86,10 +96,10 @@ document.getElementById('uploadForm').onsubmit = function(e) {
     }
   }).then(data => {
     const response = JSON.parse(data);
-    // document.getElementById('fileName').value = response.path;
     setTimeout(function() {
       document.title = windowtitle;
     }, 2000);
+    document.getElementById('chooseFile').innerHTML = 'Choose your file';
   })
     .catch(err => {
       let error = err;
@@ -120,6 +130,7 @@ document.getElementById('downloadForm').onsubmit = function(e) {
     setTimeout(function() {
       document.title = windowtitle;
     }, 2000);
+    document.getElementById('downloadForm').reset();
   })
     .catch(err => {
       let error = err;
@@ -146,16 +157,8 @@ window.addEventListener('load', function(e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));
 });
+
 document.getElementById('upload_list').addEventListener('click', function(e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));
 });
-
-document.getElementById('uploadinput').onchange = function(e) {
-  const element = e.target.value.replace(/.*\\/, '');
-
-  if (element) {
-    document.querySelector('.upload__icon__text').innerHTML = element;
-    setEnableElement('uploadButton', 'button enabled');
-  }
-};

@@ -13,7 +13,7 @@ body{
   display: block;
   text-align: center;
   margin: 8px 0 8px 0;
-  padding: 0;
+  padding: 3em 0 1em 0;
   border: 0;
   font-size: 100%;
   font: inherit;
@@ -30,7 +30,6 @@ body{
   flex-direction: row;
   flex-wrap: nowrap;
   max-width: 100%; 
-  padding: 30px 0;
 }
 .upload,.download,.list{
   margin: 10px;
@@ -39,16 +38,19 @@ body{
 .list{
   width: 40%;
 }
-p {
+h3 {
   margin: 0 0 2em 0;
+  font-weight: 300;
+  letter-spacing: 0.100em;
 }
-h2,{
+h1{
   color: #666f77;
   font-weight: 300;
   line-height: 1em;
   margin: 0 0 1em 0;
   text-transform: uppercase;
   letter-spacing: 0.125em;
+  font-size: 2.0em;
 }
 a {
   color: #629DD1;
@@ -59,31 +61,18 @@ a {
     text-decoration: none;
   }
 
-/* #fileContainer {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  background:#474545;
-  border-radius: .5em;
-  height: 2.85em;
-  line-height: 2.85em;
-  cursor: pointer;
-} */
-
-.upload__wrap {
-
-}
-
 .upload__wrap > input {
   display: none;
 }
 
 .upload__icon {
-
-}
-
-.upload__icon__text {
-
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px rgba(112, 112, 112, 0.25);
+  color: #666f77 !important;
+  border-radius: .5em;
+  height: 2.8em;
+  border: none;
+  width: 100%;
 }
 
 #fileName{
@@ -94,6 +83,7 @@ a {
   height: 3.8em;
   border: none;
   width: 100%;
+  margin-top: 1.4em;
 }
 .hidden{
   display: none;
@@ -111,6 +101,7 @@ a {
     box-shadow: inset 0 0 0 1px #629DD1;
     color:  #629DD1 !important;
     background-color: transparent;
+    transition:all 300ms;
   }  
   .disabled{
     box-shadow: inset 0 0 0 1px #629DD1;
@@ -127,6 +118,7 @@ a {
   .enabled:hover{
     background-color: #629DD1;
     color: white !important;
+    transition:all 300ms;
   }
   
   #uploadBar {
@@ -149,6 +141,10 @@ a {
   #errors {
     text-align: center;
     color : red;
+    font-weight: 300;
+    line-height: 1em;
+    text-transform: uppercase;
+    font-size: 1.5em;
   } 
   .button{
 		border-radius: 6px;
