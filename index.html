@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
-
 <body>
   <section class="main">
     <header class="major">
@@ -35,7 +34,7 @@
           </form>
         </div>
         <div class="download">
-          <form id='downloadForm'>
+          <form id='downloadForm' autocomplete="off">
             <input type='submit' value='Download' id="downloadButton" class="button disabled" disabled="true" />
             <input type="text" name="sampleFile" id="fileName" />
             <div class="myProgress">
@@ -54,6 +53,8 @@
   </section>
 </body>
 <script src="HttpRequest.js"></script>
-<script src="progress.js"></script>
-
+<script src="progress_bar.js"></script>
+<script src="file_utils.js"></script>
+<script src="form_utils.js"></script>
+<script src="main.js"></script>
 </html>

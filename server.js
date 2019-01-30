@@ -7,7 +7,10 @@ const app = express();
 
 app.use('/form', express.static(`${__dirname}/index.html`));
 app.use('/style.css', express.static(`${__dirname}/src/style.css`));
-app.use('/progress.js', express.static(`${__dirname}/src/progress.js`));
+app.use('/main.js', express.static(`${__dirname}/src/main.js`));
+app.use('/progress_bar.js', express.static(`${__dirname}/src/progress_bar.js`));
+app.use('/file_utils.js', express.static(`${__dirname}/src/file_utils.js`));
+app.use('/form_utils.js', express.static(`${__dirname}/src/form_utils.js`));
 app.use('/HttpRequest.js', express.static(`${__dirname}/src/HttpRequest.js`));
 app.use('/files', express.static(`${__dirname}/uploads`));
 
@@ -39,7 +42,7 @@ app.post('/upload', function(req, res) {
     return;
   }
 
-  console.log('req.files >>>', req.files); // eslint-disable-line
+  console.log('req.files >>>', req.files);
 
   sampleFile = req.files.sampleFile;
 

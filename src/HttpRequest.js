@@ -1,4 +1,3 @@
-
 class HttpRequest {
   constructor({ baseUrl, headers }) {
     this.baseUrl = baseUrl;
@@ -11,6 +10,7 @@ class HttpRequest {
     }
     return xmlhtreq;
   }
+
   static applyUrl(url, params) {
     let newUrl = url;
     newUrl += '?';
