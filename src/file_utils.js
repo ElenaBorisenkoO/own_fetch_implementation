@@ -38,7 +38,7 @@ function loadFileTransformer(data) {
 }
 
 function drawFilesList(files) {
-  const list = document.getElementById('files_list');
+  const list = document.querySelector('.files_list');
   list.innerHTML = '';
   files.forEach(element => {
     const listItem = document.createElement('li');

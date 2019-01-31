@@ -54,9 +54,8 @@ class HttpRequest {
         if (xhr.readyState === 4 && xhr.status === 200) {
           const transResp = transformResponse ? transformResponse(xhr) : xhr.response;
           resolve(transResp);
-        } else {
-          reject(xhr);
         }
+        reject(xhr);
       };
       xhr.send(data || null);
     });

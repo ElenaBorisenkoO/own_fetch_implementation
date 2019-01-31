@@ -1,6 +1,6 @@
 /* eslint-disable */
 const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' });
-const errorLine = document.getElementById('errors');
+const errorLine = document.querySelector('.errors');
 
 document.getElementById('uploadForm').onsubmit = function(e) {
   e.preventDefault();
@@ -9,47 +9,47 @@ document.getElementById('uploadForm').onsubmit = function(e) {
   const myHeaders = new Headers();
   myHeaders.append('Content-Type', 'multipart/form-data');
   form.append('sampleFile', e.target.sampleFile.files[0]);
-  showProgressBar('uploadBar');
+  showProgressBar('.uploadBar');
   const windowtitle = document.title;
   xhr.post('/upload', {
     data: form,
     onUploadProgress: data => {
-      processProgressBar('uploadBar', data);
+      processProgressBar('.uploadBar', data);
     }
   }).then(data => {
     const response = JSON.parse(data);
     setTimeout(function() {
       document.title = windowtitle;
     }, 2000);
-    document.getElementById('chooseFile').innerHTML = 'Choose your file';
+    document.querySelector('.chooseFile').innerHTML = 'Choose your file';
   })
     .catch(err => {
       let error = err;
       error = 'Cannot Upload file  Error: 404 (Not Found)';
       errorLine.innerHTML = error;
     });
-  setTimeout(showProgressBar, 2000, 'uploadBar');
+  setTimeout(showProgressBar, 2000, '.uploadBar');
 };
 
 document.getElementById('downloadForm').onsubmit = function(e) {
   e.preventDefault();
-  const fileName = document.getElementById('fileName').value;
+  const fileName = document.querySelector('.fileName').value;
   errorLine.innerHTML = '';
 
   if (!fileName) {
     errorLine.innerHTML = 'Please specify file name';
   }
-  showProgressBar('downloadBar');
+  showProgressBar('.downloadBar');
   const windowtitle = document.title;
   xhr.get(`/files/${fileName}`, {
     responseType: 'arraybuffer',
     onDownloadProgress: data => {
-      processProgressBar('downloadBar', data);
+      processProgressBar('.downloadBar', data);
     },
     transformResponse: loadFileTransformer
 
   }).then(data => {
-    fileProcessor(data, fileName, document.getElementById('image'));
+    fileProcessor(data, fileName, document.querySelector('.image'));
     setTimeout(function() {
       document.title = windowtitle;
     }, 2000);
@@ -60,7 +60,7 @@ document.getElementById('downloadForm').onsubmit = function(e) {
       error = 'Cannot Download file Error: 404 (Not Found)';
       errorLine.innerHTML = error;
     });
-  setTimeout(showProgressBar, 2000, 'downloadBar');
+  setTimeout(showProgressBar, 2000, '.downloadBar');
 };
 
 window.addEventListener('load', function(e) {
@@ -68,7 +68,7 @@ window.addEventListener('load', function(e) {
     drawFilesList(JSON.parse(data)));
 });
 
-document.getElementById('upload_list').addEventListener('click', function(e) {
+document.querySelector('.upload_list').addEventListener('click', function(e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));
 });

@@ -1,5 +1,5 @@
 function processProgressBar(id, data) {
-  const element = document.getElementById(id);
+  const element = document.querySelector(id);
   let currentWidth = element.style.width;
   currentWidth = (data.loaded / data.total) * 100;
   element.style.width = `${currentWidth}%`;
@@ -8,7 +8,7 @@ function processProgressBar(id, data) {
 }
 
 function showProgressBar(id) {
-  const element = document.getElementById(id);
+  const element = document.querySelector(id);
 
   if (element.classList.contains('hidden')) {
     element.classList.remove('hidden');
