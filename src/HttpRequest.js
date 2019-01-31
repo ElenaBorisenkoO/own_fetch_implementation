@@ -32,57 +32,40 @@ class HttpRequest {
     });
     return _xhr;
   }
-
-  get(url, config) {
-    const { headers, params, transformResponse, responseType, onDownloadProgress } = config;
+  _request(method, url, config) {
+    const { headers,
+      params,
+      data,
+      transformResponse,
+      responseType,
+      onDownloadProgress,
+      onUploadProgress } = config;
+    HttpRequest.applyUrl(url, params);
     const xhr = new XMLHttpRequest();
-    xhr.responseType = responseType;
 
-    if (params) {
-      this.applyUrl(url, params);
-    }
-
-    if (onDownloadProgress) {
-      xhr.onprogress = onDownloadProgress;
-    }
-
-    xhr.open('GET', this.baseUrl + url, true);
+    xhr.open(method, this.baseUrl + url, true);
     HttpRequest.processHeaders([headers, this.headers], xhr);
+    xhr.responseType = responseType;
+    xhr.onprogress = onDownloadProgress;
+    xhr.upload.onprogress = onUploadProgress;
 
     return new Promise((resolve, reject) => {
       xhr.onloadend = () => {
-        if (xhr.status === 200) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
           const transResp = transformResponse ? transformResponse(xhr) : xhr.response;
           resolve(transResp);
         } else {
           reject(xhr);
         }
       };
-      xhr.send();
+      xhr.send(data || null);
     });
   }
-
+  get(url, config) {
+    return this._request('GET', url, config);
+  }
   post(url, config) {
-    const { headers, data, onUploadProgress } = config;
-    const xhr = new XMLHttpRequest();
-
-    xhr.open('POST', this.baseUrl + url, true);
-    HttpRequest.processHeaders([headers, this.headers], xhr);
-
-    if (onUploadProgress) {
-      xhr.onprogress = onUploadProgress;
-    }
-
-    return new Promise((resolve, reject) => {
-      xhr.onloadend = () => {
-        if (xhr.status === 200) {
-          resolve(xhr.response);
-        } else {
-          reject(xhr);
-        }
-      };
-      xhr.send(data);
-    });
+    return this._request('POST', url, config);
   }
 }
 
@@ -145,5 +128,4 @@ class HttpRequest {
 //   onDownloadProgress(progressEvent) {
 //     // Do whatever you want with the native progress event
 //   }
-// };
-
+// }
