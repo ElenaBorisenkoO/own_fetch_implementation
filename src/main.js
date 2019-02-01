@@ -1,16 +1,21 @@
 /* eslint-disable */
 const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' });
 const errorLine = document.querySelector('.errors');
+const windowtitle = document.title;
+const uploadForm = document.getElementById('uploadForm');
+const downloadForm = document.getElementById('downloadForm');
 
-document.getElementById('uploadForm').onsubmit = function(e) {
+function onFileUploadSubmit(e) {
   e.preventDefault();
+
   errorLine.innerHTML = '';
+  const [file] = e.target.sampleFile.files;
   const form = new FormData();
   const myHeaders = new Headers();
+
   myHeaders.append('Content-Type', 'multipart/form-data');
-  form.append('sampleFile', e.target.sampleFile.files[0]);
+  form.append('sampleFile', file);
   showProgressBar('.uploadBar');
-  const windowtitle = document.title;
   xhr.post('/upload', {
     data: form,
     onUploadProgress: data => {
@@ -18,7 +23,7 @@ document.getElementById('uploadForm').onsubmit = function(e) {
     }
   }).then(data => {
     const response = JSON.parse(data);
-    setTimeout(function() {
+    setTimeout(function () {
       document.title = windowtitle;
     }, 2000);
     document.querySelector('.chooseFile').innerHTML = 'Choose your file';
@@ -31,8 +36,9 @@ document.getElementById('uploadForm').onsubmit = function(e) {
   setTimeout(showProgressBar, 2000, '.uploadBar');
 };
 
-document.getElementById('downloadForm').onsubmit = function(e) {
+ function onFileDownloadSubmit(e) {
   e.preventDefault();
+  
   const fileName = document.querySelector('.fileName').value;
   errorLine.innerHTML = '';
 
@@ -40,7 +46,6 @@ document.getElementById('downloadForm').onsubmit = function(e) {
     errorLine.innerHTML = 'Please specify file name';
   }
   showProgressBar('.downloadBar');
-  const windowtitle = document.title;
   xhr.get(`/files/${fileName}`, {
     responseType: 'arraybuffer',
     onDownloadProgress: data => {
@@ -50,7 +55,7 @@ document.getElementById('downloadForm').onsubmit = function(e) {
 
   }).then(data => {
     fileProcessor(data, fileName, document.querySelector('.image'));
-    setTimeout(function() {
+    setTimeout(function () {
       document.title = windowtitle;
     }, 2000);
     document.getElementById('downloadForm').reset();
@@ -63,12 +68,15 @@ document.getElementById('downloadForm').onsubmit = function(e) {
   setTimeout(showProgressBar, 2000, '.downloadBar');
 };
 
-window.addEventListener('load', function(e) {
+window.addEventListener('load', function (e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));
 });
 
-document.querySelector('.upload_list').addEventListener('click', function(e) {
+document.querySelector('.upload_list').addEventListener('click', function (e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));
 });
+
+uploadForm.onsubmit = onFileUploadSubmit;
+downloadForm.onsubmit = onFileDownloadSubmit;
