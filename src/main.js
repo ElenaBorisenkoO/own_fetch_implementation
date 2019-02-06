@@ -1,5 +1,5 @@
 /* eslint-disable */
-const xhr = new HttpRequest({ baseUrl: 'http://localhost:8000' });
+const xhr = new HttpRequest({ baseUrl: 'http://localhost:3000' });
 const errorLine = document.querySelector('.errors');
 const windowtitle = document.title;
 const uploadForm = document.getElementById('uploadForm');

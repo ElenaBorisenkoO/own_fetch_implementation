@@ -1,3 +1,4 @@
+
 function processProgressBar(className, data) {
   const element = document.querySelector(className);
   let currentWidth = element.style.width;

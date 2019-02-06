@@ -1,4 +1,4 @@
-function setEnableElement(elem, styleCss) {
+function setStatusElements(elem, styleCss) {
   const element = document.querySelector(elem);
   element.disabled = false;
 
@@ -12,12 +12,12 @@ document.querySelector('.uploadinput').onchange = function(e) {
 
   if (element) {
     document.querySelector('.upload__icon__text').innerHTML = element;
-    setEnableElement('.uploadButton', 'button enabled');
+    setStatusElements('.uploadButton', 'button enabled');
   }
 };
 
 document.querySelector('.fileName').addEventListener('input', function(e) {
   if (e.target.value && e.target.value.length > 0) {
-    setEnableElement('.downloadButton', 'button enabled');
+    setStatusElements('.downloadButton', 'button enabled');
   }
 });

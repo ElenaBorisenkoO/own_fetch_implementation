@@ -9,8 +9,9 @@ app.use('/form', express.static(`${__dirname}/index.html`));
 app.use('/style.css', express.static(`${__dirname}/src/style.css`));
 app.use('/main.js', express.static(`${__dirname}/src/main.js`));
 app.use('/progress_bar.js', express.static(`${__dirname}/src/progress_bar.js`));
-app.use('/file_utils.js', express.static(`${__dirname}/src/file_utils.js`));
-app.use('/form_utils.js', express.static(`${__dirname}/src/form_utils.js`));
+app.use('/file_download_draw.js', express.static(`${__dirname}/src/file_download_draw.js`));
+app.use('/form_helpers.js', express.static(`${__dirname}/src/form_helpers.js`));
+app.use('/file_list.js', express.static(`${__dirname}/src/file_list.js`));
 app.use('/HttpRequest.js', express.static(`${__dirname}/src/HttpRequest.js`));
 app.use('/files', express.static(`${__dirname}/uploads`));
 
@@ -58,6 +59,6 @@ app.post('/upload', function(req, res) {
   });
 });
 
-app.listen(8000, function() {
+app.listen(3000, function() {
   console.log('Express server listening on port 8000'); // eslint-disable-line
 });
