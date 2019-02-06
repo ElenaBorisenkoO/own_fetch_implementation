@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* global HttpRequest showProgressBar  processProgressBar  loadFileTransformer fileProcessor drawFilesList*/
 const xhr = new HttpRequest({ baseUrl: 'http://localhost:3000' });
 const errorLine = document.querySelector('.errors');
 const windowtitle = document.title;
@@ -13,7 +13,7 @@ function onFileUploadSubmit(e) {
   const form = new FormData();
   const myHeaders = new Headers();
 
-  myHeaders.append('Content-Type', 'multipart/form-data');
+  // myHeaders.append('Content-Type', 'multipart/form-data');
   form.append('sampleFile', file);
   showProgressBar('.uploadBar');
   xhr.post('/upload', {
@@ -23,7 +23,7 @@ function onFileUploadSubmit(e) {
     }
   }).then(data => {
     const response = JSON.parse(data);
-    setTimeout(function () {
+    setTimeout(function() {
       document.title = windowtitle;
     }, 2000);
     document.querySelector('.chooseFile').innerHTML = 'Choose your file';
@@ -34,11 +34,10 @@ function onFileUploadSubmit(e) {
       errorLine.innerHTML = error;
     });
   setTimeout(showProgressBar, 2000, '.uploadBar');
-};
+}
 
- function onFileDownloadSubmit(e) {
+function onFileDownloadSubmit(e) {
   e.preventDefault();
-  
   const fileName = document.querySelector('.fileName').value;
   errorLine.innerHTML = '';
 
@@ -55,7 +54,7 @@ function onFileUploadSubmit(e) {
 
   }).then(data => {
     fileProcessor(data, fileName, document.querySelector('.image'));
-    setTimeout(function () {
+    setTimeout(function() {
       document.title = windowtitle;
     }, 2000);
     document.getElementById('downloadForm').reset();
@@ -66,14 +65,14 @@ function onFileUploadSubmit(e) {
       errorLine.innerHTML = error;
     });
   setTimeout(showProgressBar, 2000, '.downloadBar');
-};
+}
 
-window.addEventListener('load', function (e) {
+window.addEventListener('load', function(e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));
 });
 
-document.querySelector('.upload_list').addEventListener('click', function (e) {
+document.querySelector('.upload_list').addEventListener('click', function(e) {
   xhr.get('/list', {}).then(data =>
     drawFilesList(JSON.parse(data)));
 });
